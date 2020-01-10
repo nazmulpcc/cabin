@@ -1,0 +1,92 @@
+version: "3"
+
+services:
+  work:
+    build:
+      context: ./work
+      args:
+        - WORK_USER=${WORK_USER}
+        - HOST_USER_ID=${HOST_USER_ID}
+        - HOST_GROUP_ID=${HOST_GROUP_ID}
+        - DOMAIN=${DOMAIN}
+    tty: true
+    environment:
+      - WORK_USER=${WORK_USER}
+      - DOMAIN=${DOMAIN}
+      - CERTBOT_EMAIL=${CERTBOT_EMAIL}
+      - CERTBOT_CLOUDFLARE_EMAIL=${CERTBOT_CLOUDFLARE_EMAIL}
+      - CERTBOT_CLOUDFLARE_API=${CERTBOT_CLOUDFLARE_API}
+    volumes:
+      - ${PROJECT_PATH}:/var/www
+      - ./data/certbot:/etc/letsencrypt
+      - ./data/ssl:/etc/nginx-ssl
+
+  php:
+    build:
+      context: ./php
+    volumes:
+      - ${PROJECT_PATH}:/var/www
+  
+  node:
+    build:
+      context: ./nodejs
+    volumes:
+      - ${PROJECT_PATH}:/var/www
+
+  nginx:
+    build: 
+      context: ./nginx
+    volumes:
+      - ./data/ssl:/etc/nginx/ssl
+      - ${NGINX_SITES}:/etc/nginx/conf.d
+      - ${PROJECT_PATH}:/var/www
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - php
+      - work
+
+  socket:
+    build:
+      context: ./socket
+    volumes:
+      - ./data/ssl:/etc/nginx/ssl
+    ports:
+      - 4000:4000
+    depends_on:
+      - php
+
+  mysql:
+    build:
+      context: ./mysql
+      args: 
+        - TIMEZONE=${TIMEZONE}
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    build:
+      context: ./phpmyadmin
+    environment:
+      - PMA_HOST=mysql
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "${PMA_PORT}:80"
+    depends_on:
+      - mysql
+
+  redis:
+    build:
+      context: ./redis

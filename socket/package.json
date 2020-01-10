@@ -1,0 +1,14 @@
+{
+  "name": "socket",
+  "description": "Docker container for socket connections",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ioredis": "^4.6.2",
+    "socket.io": "^2.2.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
