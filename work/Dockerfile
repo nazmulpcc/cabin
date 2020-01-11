@@ -3,10 +3,11 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
-    apt-get -y install nano sudo git wget openssh-client inetutils-ping mysql-client
+    apt-get -y install nano sudo git wget openssh-client inetutils-ping mysql-client unzip
 
 RUN apt-get -yq install software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update
 
 RUN apt-get -yq install \
     php7.3 \
@@ -18,8 +19,9 @@ RUN apt-get -yq install \
     php7.3-soap \
     php7.3-zip \
     php7.3-xml \
-    php7.3-mysql \
-    composer
+    php7.3-mysql
+
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN add-apt-repository -y ppa:certbot/certbot && \
     apt-get install -yq certbot python3-certbot-dns-cloudflare curl
