@@ -5,9 +5,9 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get -y install nano sudo git wget openssh-client inetutils-ping mysql-client unzip
 
-RUN apt-get -yq install software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php && \
-    apt-get update
+RUN apt-get -yq install software-properties-common
+RUN add-apt-repository -y ppa:ondrej/php
+RUN apt-get update
 
 RUN apt-get -yq install \
     php7.3 \
