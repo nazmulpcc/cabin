@@ -1,7 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ -f startup.sh ]; then
-    sh startup.sh
-else
-    echo "No startup script, exiting"
-fi
+cd /var/www/frontend
+yarn build
+yarn start

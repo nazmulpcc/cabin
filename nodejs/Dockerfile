@@ -15,10 +15,10 @@ RUN apk add python make g++
 #     usermod ${WORK_USER} -a -G sudo && \
 #     groupmod -g ${HOST_GROUP_ID} ${WORK_USER}
 
-USER ${HOST_USER_ID}
+# USER ${HOST_USER_ID}
 
-COPY ${NODEJS_STARTUP} /root/init.sh
+COPY ./init.sh /root/init.sh
 
 WORKDIR /var/www
 
-CMD bash /root/init.sh
+CMD ["/bin/sh", "/root/init.sh"]

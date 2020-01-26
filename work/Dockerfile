@@ -36,11 +36,11 @@ RUN adduser ${WORK_USER} --disabled-password --gecos '' --uid ${HOST_USER_ID} &&
     echo "${WORK_USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs supervisor && \
+    apt-get install -y nodejs && \
     apt-get remove cmdtest
 
-COPY ./supervisor/*.conf /etc/supervisor/conf.d/
-RUN sed -i "s/WORK_USER$/${WORK_USER}/g" /etc/supervisor/conf.d/*.conf
+# COPY ./supervisor/*.conf /etc/supervisor/conf.d/
+# RUN sed -i "s/WORK_USER$/${WORK_USER}/g" /etc/supervisor/conf.d/*.conf
 RUN npm i -g yarn
 
 USER ${WORK_USER}
