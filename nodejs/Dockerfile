@@ -19,6 +19,8 @@ RUN apk add python make g++
 
 COPY ./init.sh /root/init.sh
 
+EXPOSE 3000
+
 WORKDIR /var/www
 
 CMD ["/bin/sh", "/root/init.sh"]
