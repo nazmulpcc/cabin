@@ -6,8 +6,7 @@ MYSQL_HOST=mysql
 MYSQL_PORT=3306
 BACKCMD=mariabackup
 BACKDIR=/var/backup
-FULLBACKUPCYCLE=${FREQUENCY} # Create a new full backup every X seconds
-KEEP=7 # Number of additional backups cycles a backup should kept for.
+FULLBACKUPCYCLE=${BACKUP_FREQUENCY} # Create a new full backup every X seconds
 LOCKDIR=/tmp/mariabackup.lock
 
 ReleaseLockAndExitWithCode () {
@@ -17,7 +16,7 @@ ReleaseLockAndExitWithCode () {
   else
     echo "Could not remove lock dir" >&2
   fi
-  sleep $FREQUENCY
+  sleep $BACKUP_FREQUENCY
   exec $(readlink -f "$0")
 }
 
@@ -135,7 +134,7 @@ else
   $BACKCMD --backup $USEROPTIONS $ARGS --extra-lsndir=$TARGETDIR --stream=xbstream | gzip > $TARGETDIR/backup.stream.gz
 fi
 
-MINS=$(($FULLBACKUPCYCLE * ($KEEP + 1 ) / 60))
+MINS=$(($FULLBACKUPCYCLE * ($BACKUP_KEEP + 1 ) / 60))
 echo "Cleaning up old backups (older than $MINS minutes) and temporary files"
 
 # Delete old backups

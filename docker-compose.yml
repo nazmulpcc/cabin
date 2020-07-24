@@ -98,7 +98,8 @@ services:
     build: 
       context: ./backup
     environment: 
-      - FREQUENCY=${FREQUENCY}
+      - BACKUP_FREQUENCY=${FREQUENCY}
+      - BACKUP_KEEP=${BACKUP_KEEP}
       - MYSQL_USER=${BACKUP_MYSQL_USER}
       - MYSQL_PASSWORD=${BACKUP_MYSQL_PASSWORD}
     volumes:
