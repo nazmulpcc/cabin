@@ -11,7 +11,7 @@ RUN mkdir -p /etc/apk/cache && apk update && \
     --with-png-dir \
     --with-zlib-dir \
     --with-freetype-dir && \
-    docker-php-ext-install bcmath pdo_mysql gd gmp soap
+    docker-php-ext-install bcmath pdo_mysql mysqli gd gmp soap
 
 RUN apk add --no-cache autoconf git g++ make && \
     git clone https://github.com/phpredis/phpredis.git && \
