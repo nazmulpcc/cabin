@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine3.10
+FROM php:7.4-fpm-alpine3.12
 
 RUN mkdir -p /etc/apk/cache && apk update && \
     apk add gmp-dev && \
