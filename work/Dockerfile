@@ -10,16 +10,16 @@ RUN add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
 
 RUN apt-get -yq install \
-    php7.3 \
-    php7.3-gmp \
-    php7.3-curl \
-    php7.3-gd \
-    php7.3-mbstring \
-    php7.3-bcmath \
-    php7.3-soap \
-    php7.3-zip \
-    php7.3-xml \
-    php7.3-mysql
+    php7.4 \
+    php7.4-gmp \
+    php7.4-curl \
+    php7.4-gd \
+    php7.4-mbstring \
+    php7.4-bcmath \
+    php7.4-soap \
+    php7.4-zip \
+    php7.4-xml \
+    php7.4-mysql
 
 RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --install-dir=/usr/local/bin --filename=composer
 

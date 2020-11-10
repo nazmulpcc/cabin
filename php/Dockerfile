@@ -4,13 +4,7 @@ RUN mkdir -p /etc/apk/cache && apk update && \
     apk add gmp-dev && \
     apk add libxml2-dev && \
     apk add libpng-dev freetype-dev libjpeg-turbo-dev libwebp-dev && \
-    docker-php-ext-configure gd \
-    --with-gd \
-    --with-webp-dir \
-    --with-jpeg-dir \
-    --with-png-dir \
-    --with-zlib-dir \
-    --with-freetype-dir && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install bcmath pdo_mysql mysqli gd gmp soap
 
 RUN apk add --no-cache autoconf git g++ make && \
@@ -26,5 +20,7 @@ RUN rm -rf /var/cache/apk && rm -rf /etc/apk/cache
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d
 COPY ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
+
+WORKDIR /var/www
 
 EXPOSE 9000
