@@ -105,6 +105,8 @@ services:
     volumes:
       - ./data/backup:/var/backup
       - ./data/mysql:/var/lib/mysql
+    depends_on: 
+      - mysql
 
   redis:
     build:
