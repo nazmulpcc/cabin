@@ -39,7 +39,7 @@ START=`date +%s`
 
 echo "----------------------------"
 echo
-echo "run-mariabackup.sh: MySQL backup script"
+echo "MySQL backup script"
 echo "started: `date`"
 echo
 
@@ -71,8 +71,10 @@ fi
 
 if [ -z "`mysqladmin $USEROPTIONS status | grep 'Uptime'`" ]
 then
-  echo "HALTED: MySQL does not appear to be running."; echo
-  exit 1
+  echo "HALTED: MySQL does not appear to be running.";
+  echo "Will retry after a minute."; echo
+  sleep 60
+  exec $(readlink -f "$0")
 fi
 
 if ! `echo 'exit' | /usr/bin/mysql -s $USEROPTIONS`
