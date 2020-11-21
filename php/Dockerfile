@@ -1,11 +1,9 @@
 FROM php:7.4-fpm-alpine3.12
 
 RUN mkdir -p /etc/apk/cache && apk update && \
-    apk add gmp-dev && \
-    apk add libxml2-dev && \
-    apk add libpng-dev freetype-dev libjpeg-turbo-dev libwebp-dev && \
+    apk add gmp-dev libxml2-dev libpng-dev freetype-dev libjpeg-turbo-dev libwebp-dev libzip libzip-dev && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install bcmath pdo_mysql mysqli gd gmp soap
+    docker-php-ext-install bcmath pdo_mysql mysqli gd gmp soap zip
 
 RUN apk add --no-cache autoconf git g++ make && \
     git clone https://github.com/phpredis/phpredis.git && \
