@@ -81,6 +81,13 @@ services:
     ports:
       - 3306:3306
 
+  mongo:
+    image: mongo:4.4.6
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+
   phpmyadmin:
     build:
       context: ./phpmyadmin

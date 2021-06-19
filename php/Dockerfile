@@ -12,7 +12,8 @@ RUN apk add --no-cache autoconf git g++ make && \
     phpize && \
     ./configure && \
     make && make install && \
-    docker-php-ext-enable redis
+    pecl install mongodb && \
+    docker-php-ext-enable redis mongodb
 
 RUN rm -rf /var/cache/apk && rm -rf /etc/apk/cache
 
