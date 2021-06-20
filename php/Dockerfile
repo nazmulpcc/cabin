@@ -5,7 +5,7 @@ RUN mkdir -p /etc/apk/cache && apk update && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install bcmath pdo_mysql mysqli gd gmp soap zip exif
 
-RUN apk add --no-cache autoconf git g++ make && \
+RUN apk add --no-cache autoconf git g++ make openssl-dev && \
     git clone https://github.com/phpredis/phpredis.git && \
     cd phpredis && \
     git checkout a080b73f07815adf7668e0e70fa4184be606fd6b && \
