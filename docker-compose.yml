@@ -28,7 +28,12 @@ services:
           - WORK_USER=${WORK_USER}
     volumes:
       - ${PROJECT_PATH}:/var/www
-  
+
+  php8:
+    image: nazmulpcc/php:8.0-fpm
+    volumes:
+      - ${PROJECT_PATH}:/var/www
+
   nodejs:
     build:
       context: ./nodejs
@@ -76,6 +81,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - TZ=${TIMEZONE}
+    ports:
+      - ${MYSQL_PUBLIC_PORT}:3306
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
@@ -86,6 +93,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - ${MONGO_PUBLIC_PORT}:27017
+    volumes:
+      - ./data/mongo:/data/db
 
   phpmyadmin:
     build:
